@@ -1,0 +1,8 @@
+h1,p {
+    color: black;
+}
+
+.container {
+    margin: auto !important;
+    width: 50%;
+}

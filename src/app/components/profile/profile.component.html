@@ -1,0 +1,83 @@
+<div class="jumbotron jumbotron-fluid">
+  <div class="container">
+    <h1 class="display-4">
+      <i class="fa fa-user" aria-hidden="true"></i>
+      {{user_name}}</h1>
+    <p class="lead">User Details</p>
+    <hr class="my-4">
+    <div class="center-block">
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="basic-addon1">Adult Content:</span>
+        </div>
+        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+          <label id="adult-yes" class="btn btn-secondary active">
+            <input type="radio" name="options" id="option1" autocomplete="off" checked> Yes
+          </label>
+          <label class="btn btn-secondary">
+            <input type="radio" name="options" id="option3" autocomplete="off"> No
+          </label>
+        </div>
+      </div>
+      <br>
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="basic-addon1">Language</span>
+        </div>
+        <input list="languages" name="language" id="lang" #lang placeholder="{{default_lang}}">
+        <datalist id="languages">
+          <option *ngFor="let lang of lang_keys" value="{{lang}}">
+        </datalist>
+      </div>
+      <br>
+      <button type="button" class="btn btn-info" (click)="save(lang.value)">Save Details</button>
+      <br>
+      <br>
+      <div style="margin-bottom: 10px;" class="btn-group btn-group-toggle" data-toggle="buttons">
+        <label class="btn btn-secondary active" (click)="setCat(true)">
+          <input type="radio" name="options" id="option1" autocomplete="off" checked>Rated Movies
+        </label>
+        <label class="btn btn-secondary" (click)="setCat(false)">
+          <input type="radio" name="options" id="option2" autocomplete="off">Bookmarked Movies
+        </label>
+      </div>
+      <br>
+      <table class="table">
+        <tbody *ngIf="show_like; else showBook">
+          <tr *ngFor="let reaction of reactions_data">
+            <td>{{convertTimestamp(reaction.last_updated)}}</td>
+            <td>{{reaction.title}}</td>
+            <td>
+              <ng-template [ngIf]="reaction.like_status == true">
+                Liked
+              </ng-template>
+              <ng-template [ngIf]="reaction.like_status == false">
+                  Disliked
+                </ng-template>
+                <ng-template [ngIf]="reaction.like_status == null || reaction.like_status == undefined">
+                    Removed
+                  </ng-template>
+            </td>
+          </tr>
+        </tbody>
+        <ng-template #showBook>
+          <tbody>
+            <tr *ngFor="let bookmark of bookmarked_data">
+              <td>{{convertTimestamp(bookmark.last_updated)}}</td>
+              <td>{{bookmark.title}}</td>
+              <td>
+                  <ng-template [ngIf]="reaction.like_status == true">
+                      Bookmarked
+                    </ng-template>
+                    <ng-template [ngIf]="bookmark.list_status == null || bookmark.list_status == undefined || bookmark.list_status">
+                      Removed
+                      </ng-template>
+              </td>
+            </tr>
+          </tbody>
+        </ng-template>
+      </table>
+      <button type="button" class="btn btn-dark" routerLink="/settings" routerLinkActive="active">Settings</button>
+    </div>
+  </div>
+</div>

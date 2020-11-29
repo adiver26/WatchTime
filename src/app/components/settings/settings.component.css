@@ -1,0 +1,27 @@
+.warnings {
+    margin-top: 30px;
+    text-align: center;
+}
+.input-group{
+    margin-top: 50px;
+    display: flex;
+    justify-content: center;
+}
+
+.input-group-text{
+    background-color: #1d2124 !important;
+    border-color: #1d2124 !important;
+}
+
+label{
+    color: white;
+}
+
+h3 {
+    color: white;
+}
+
+textarea {
+    max-width: 50%;
+
+}

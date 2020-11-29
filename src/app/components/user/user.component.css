@@ -1,0 +1,90 @@
+table, th , td  {
+    border: 1px solid grey;
+    border-collapse: collapse;
+    padding: 10px;
+  }
+  table tr:nth-child(odd) {
+    background-color: #f1f1f1;
+  }
+  table tr:nth-child(even) {
+    background-color: #ffffff;
+  }
+  table
+  { 
+  margin-left: auto;
+  margin-right: auto;
+  }
+
+  .example-card {
+    width: 400px; 
+    font-family: 'Source Sans Pro', sans-serif;
+    
+  }
+
+.input-group.mb-3 {
+  margin-left: auto;
+  margin-right: auto;
+  width: 30%
+}
+
+@media only screen and (max-width: 768px) {
+  .input-group.mb-3 {
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%
+  }
+}
+
+a {
+  text-decoration: none;
+  display: inline-block;
+  border-radius: 25px;
+  padding: 8px 16px;
+  color: black;
+}
+
+a:hover {
+  background-color: #ddd;
+  color: black;
+}
+a.netflix:hover{
+  background-color: #E50914;
+  color: black;
+}
+a.prime:hover{
+  background-color: #00a8e1;
+  color: black;
+}
+
+label {
+  color: black;
+  font-size: 15px;
+}
+
+h4 {
+  color: white;
+}
+
+#query, #query:focus, #query:active{
+  border-color: white !important;
+  -webkit-appearance:none !important;
+  box-shadow: none !important;
+-moz-box-shadow: none !important;
+-webkit-box-shadow: none !important;
+outline:none !important;
+}
+
+button, button:focus, button:active, .form-control:focus {
+  -webkit-appearance:none !important;
+  box-shadow: none !important;
+-moz-box-shadow: none !important;
+-webkit-box-shadow: none !important;
+outline:none !important;
+}
+
+#basic-addon2 {
+  border: none;
+  border-top-right-radius: .25rem !important;
+  border-bottom-right-radius: .25rem  !important;
+  padding-left: 13px;
+}

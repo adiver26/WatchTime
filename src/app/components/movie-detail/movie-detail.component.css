@@ -1,0 +1,34 @@
+p {
+    color: white;
+}
+
+p i {
+    margin-left:10px !important;
+    color:white;
+  }
+
+  a {
+    text-decoration: none;
+    display: inline-block;
+    padding: 8px 16px;
+    border-radius: 25px;
+    color: white !important;
+    border: 1px;
+  }
+  
+  a:hover {
+    background-color: black;
+    color: white;
+  }
+  a.netflix:hover{
+    background-color: #E50914;
+    color: black;
+  }
+  a.prime:hover{
+    background-color: #00a8e1;
+    color: black;
+  }
+
+  h1{
+    color: white;
+  }

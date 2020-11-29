@@ -1,0 +1,92 @@
+.slider-section{
+  margin-left: 20px;
+  margin-right: 20px;
+}
+.flickity-viewport {
+  background-color: black !important;
+}
+.carousel-cell {
+  background-color: black;
+  width: 185px;
+  height: 278px;
+  margin-right: 4px;
+  border-radius: 5px;
+}
+
+.carousel-cell:before {
+  display: block;
+  text-align: center;
+}
+
+#buttons-dislike {
+  bottom: 0;
+  z-index: 1; 
+  margin-left:52%;
+  position: absolute; 
+  width: 50%;
+  border: 0px;
+  float:right;
+}
+
+#buttons-like {
+  margin-left: 4px;
+  bottom: 0;
+  z-index: 1; 
+  position: absolute; 
+  width: 50%;
+  border: 0px;
+  float:left;
+}
+
+#buttons-watchlater {
+  top:0;
+  z-index: 1; 
+  margin-left:4px;
+  position: absolute; 
+  width: 100%;
+  border: 0px;
+}
+
+button:hover
+{
+opacity: 1;
+}
+
+button
+{
+opacity: 0;
+}
+
+p{
+  color: black;
+}
+
+.jumbotron.jumbotron-fluid{
+  display: none;
+}
+
+p i {
+  margin-left:10px !important;
+}
+
+a {
+  text-decoration: none;
+  display: inline-block;
+  border-radius: 25px;
+  padding: 8px 16px;
+  color: grey !important;
+  border: 1px;
+}
+
+a:hover {
+  background-color: #ddd;
+  color: black !important;
+}
+a.netflix:hover{
+  background-color: #E50914;
+  color: black;
+}
+a.prime:hover{
+  background-color: #00a8e1;
+  color: black;
+}

@@ -1,0 +1,167 @@
+<br>
+<div class="container" style="text-align:center; position:relative;">
+  <h3 style="color: white; font-size: 64px; font-weight: bold;" class="fas fa-heading">WatchTime</h3>
+  <h4>
+    An easy way to find
+    <i routerLink="/discover" routerLinkActive="active">discovering</i> movies and getting
+    <i routerLink="/recom" routerLinkActive="active">recommendations</i>
+    <br>
+  </h4>
+  <br>
+</div>
+<div class="container" id="search" style="text-align:center">
+  <div class="input-group mb-3">
+    <input type="text" autocomplete="off" [(ngModel)]="texts" class="form-control" id="query" placeholder="Search" (keyup)="sendReq(query.value,$event)"
+      aria-label="Search" aria-describedby="Search" name="query" #query>
+    <div class="input-group-append">
+      <button class="btn-light" id="basic-addon2" (click)="sendReq(query.value,$event)">
+        <i class="fa fa-search fa-lg"></i>
+      </button>
+    </div>
+  </div>
+  <div class="btn-group btn-group-toggle" data-toggle="buttons">
+    <label class="btn btn-light active" (click)="setCat(true, query.value, $event)">
+      <input type="radio" name="options" id="option1" autocomplete="off" checked>
+      <i style="margin-left:3px" class="fa fa-film" aria-hidden="true"></i> Movies
+    </label>
+    <label class="btn btn-light" (click)="setCat(false, query.value, $event)">
+      <input type="radio" name="options" id="option2" autocomplete="off">
+      <i style="margin-left:3px" class="fa fa-television" aria-hidden="true"></i> TV Shows
+    </label>
+  </div>
+</div>
+<br>
+<div *ngIf="data">
+  <div *ngIf="data.results.length>1;else noresults">
+    <div style="text-align:center">
+      <p>You searched for '
+        <b>{{texts}}</b> ' </p>
+        <h6 style="color: white;">Total Results : {{data.total_results}}</h6>  
+    </div>
+    <div class="card-group">
+      <mat-card style="background-color: #ddd;" class="example-card" *ngFor="let movie of data.results; let myIndex = index">
+        <mat-card-header>
+          <mat-card-title (click)="trackClick(movie)">
+            <b *ngIf="movie_selected; else tvshow">
+              <i class="fa fa-film fa-lg" aria-hidden="true"></i>
+              {{movie.title}} </b>
+            <ng-template #tvshow>
+              <b>
+                <i class="fa fa-television fa-lg" aria-hidden="true"></i> {{movie.name}}
+              </b>
+            </ng-template>
+          </mat-card-title>
+        </mat-card-header>
+        <img style="border-radius: 10px" class="movie.backdrop_path;else other_content" (click)="trackClick(movie)" mat-card-image src="https://image.tmdb.org/t/p/w300/{{movie.backdrop_path}}">
+        <ng-template #other_content>
+          <img (click)="trackClick(movie)" mat-card-image src="/assets/nf.png">
+        </ng-template>
+        <mat-card-content (click)="trackClick(movie)">
+          <div class="d-flex justify-content-between">
+            <div>
+              <i class="fa fa-calendar" aria-hidden="true"></i> {{movie.release_date || movie.first_air_date || 'N/A'}}
+            </div>
+            <div>
+              <i class="fa fa-imdb fa-lg" aria-hidden="true"></i> {{movie.vote_average || 'N/A'}}
+            </div>
+          </div>
+          <i><span style="color: #666; font-size: 12px; margin-left: -3px !important;" *ngFor="let item of movie.genre_ids;let i = index">
+              <span *ngIf="i < movie.genre_ids.length-1;else fullstop2">&nbsp;{{gen[item]}},</span>
+              <ng-template #fullstop2>&nbsp;{{gen[item] || 'N/A'}}.</ng-template>
+            </span>
+          </i>
+          <br>
+          <span *ngIf="movie.overview.length>140">{{movie.overview | truncate : 140 : true}} </span>
+          <span *ngIf="movie.overview.length<140">{{movie.overview || 'N/A'}} </span>
+          <br>
+
+          <div class="d-flex justify-content-between">
+            <div>
+              <i class="fa fa-eye fa-lg" aria-hidden="true"></i>
+              <span *ngIf="movie.adult; else Audience">Restricted</span>
+              <ng-template #Audience>
+                Unrestricted
+              </ng-template>
+            </div>
+            <div>
+              <i class="fa fa-language fa-lg" aria-hidden="true"></i> {{rev_lang_obj[movie.original_language] || 'N/A'}}
+            </div>
+          </div>
+          <i class="fa fa-rocket fa-lg" aria-hidden="true"></i> {{movie.popularity || 'N/A'}}
+          <br>
+        </mat-card-content>
+        <div style="text-align: center">
+          <a class="netflix" href="https://www.netflix.com/search?q={{movie.title || movie.name}}" target="_blank">Netflix</a>
+          <a class="prime" href="https://www.primevideo.com/region/eu/search/ref=atv_nb_sr?phrase={{movie.title || movie.name}}" target="_blank">
+            <i class="fa fa-play-circle" aria-hidden="true"></i> Prime Video</a>
+          <br>
+          <a href="http://1337x.to/search/{{texts}}/1" target="_blank">1337x</a>
+          <a *ngIf="movie.name" href="https://dwatchseries.to/search/{{movie.name}}" target="_blank">WatchSeries</a>
+        </div>
+        <mat-card-actions style="text-align: center">
+          <button value="like" *ngIf="like_status_data[movie.id]; else liked_content_empty" (click)="likeMovie(this.movie,$event)"
+            class="mat-button" mat-button>
+            <i *ngIf="like_status_data[movie.id].like_status;else liked_content" class="fa fa-thumbs-up fa-lg" aria-hidden="true"></i>
+            <ng-template #liked_content>
+              <i class="fa fa-thumbs-o-up fa-lg" aria-hidden="true"></i>
+            </ng-template>
+          </button>
+          <ng-template #liked_content_empty>
+            <button value="like" (click)="likeMovie(this.movie,$event)" class="mat-button" mat-button>
+              <i class="fa fa-thumbs-o-up fa-lg" aria-hidden="true"></i>
+            </button>
+          </ng-template>
+
+          <button value="dislike" *ngIf="like_status_data[movie.id]; else disliked_content_empty" (click)="dislikeMovie(this.movie,$event)"
+            class="mat-button" mat-button>
+            <i *ngIf="like_status_data[movie.id].like_status==false;else disliked_content" class="fa fa-thumbs-down fa-lg" aria-hidden="true"></i>
+            <ng-template #disliked_content>
+              <i class="fa fa-thumbs-o-down fa-lg" aria-hidden="true"></i>
+            </ng-template>
+          </button>
+          <ng-template #disliked_content_empty>
+            <button value="dislike" (click)="dislikeMovie(this.movie,$event)" class="mat-button" mat-button>
+              <i class="fa fa-thumbs-o-down fa-lg" aria-hidden="true"></i>
+            </button>
+          </ng-template>
+
+          <button *ngIf="bookmarked_data[movie.id]; else list_content_empty" value="addList" (click)="addList(this.movie,$event)" class="mat-button"
+            mat-button>
+            <i *ngIf="bookmarked_data[movie.id].list_status;else list_content" class="fa fa-bookmark fa-lg" aria-hidden="true"></i>
+            <ng-template #list_content>
+              <i class="fa fa-bookmark-o fa-lg" aria-hidden="true"></i>
+            </ng-template>
+          </button>
+          <ng-template #list_content_empty>
+            <button value="addList" (click)="addList(this.movie,$event)" class="mat-button" mat-button>
+              <i class="fa fa-bookmark-o fa-lg" aria-hidden="true"></i>
+            </button>
+          </ng-template>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div>
+
+  <ng-template #noresults>
+    <div class="container" style="text-align:center; position:relative;">
+      <p>No results found for '
+        <b>{{texts}}</b> ' </p>
+    </div>
+  </ng-template>
+  <br>
+  <div *ngIf="data" style="text-align: center">
+    <div *ngIf="data.results.length>1">
+      <a *ngIf="data.page>1" id="prev_button" (click)="prev()" class="previous round">
+        <i class="fa fa-arrow-circle-left fa-lg" aria-hidden="true"></i>
+      </a>
+      <a *ngIf="data.page<data.total_pages" id="next_button" (click)="next()" class="next round">
+        <i class="fa fa-arrow-circle-right fa-lg" aria-hidden="true"></i>
+      </a>
+    </div>
+  </div>
+  <br>
+  <div style="text-align: center; color: white">
+    {{data.page}} / {{data.total_pages}}
+  </div>
+  <br/>
+  <br/>

@@ -1,0 +1,106 @@
+<br />
+<br />
+<div class="slider-section">
+  <div *ngFor="let section of sections_data">
+    <div *ngIf="section.data!='' && section.data!=null && section.text!=''">
+      <h3>{{section.text}}</h3>
+      <div class="{{section.class}}" data-flickity='{"wrapAround": true, "groupCells": true, "autoPlay": 3000, "pauseAutoPlayOnHover": false}'>
+        <div class="carousel-cell" *ngFor="let movie of section.data.results">
+          <a href="#here"></a>
+          <img class="carousel-img" src="https://image.tmdb.org/t/p/w185/{{movie.poster_path}}" (click)="showInfo(movie.id,section.class)">
+          <button value="like" *ngIf="like_status_data[movie.id]; else liked_content_empty" (click)="likeMovie(this.movie,$event)"
+            class="btn btn-success" id="buttons-like">
+            <i *ngIf="like_status_data[movie.id].like_status;else liked_content" class="fa fa-thumbs-up" aria-hidden="true"></i>
+            <ng-template #liked_content>
+              <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
+            </ng-template>
+          </button>
+          <ng-template #liked_content_empty>
+            <button value="like" (click)="likeMovie(this.movie,$event)" class="btn btn-success" id="buttons-like">
+              <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
+            </button>
+          </ng-template>
+          <button value="dislike" *ngIf="like_status_data[movie.id]; else disliked_content_empty" (click)="dislikeMovie(this.movie,$event)"
+            class="btn btn-warning" id="buttons-dislike">
+            <i *ngIf="like_status_data[movie.id].like_status==false;else disliked_content" class="fa fa-thumbs-down" aria-hidden="true"></i>
+            <ng-template #disliked_content>
+              <i class="fa fa-thumbs-o-down" aria-hidden="true"></i>
+            </ng-template>
+          </button>
+          <ng-template #disliked_content_empty>
+            <button value="dislike" (click)="dislikeMovie(this.movie,$event)" class="btn btn-warning" id="buttons-dislike">
+              <i class="fa fa-thumbs-o-down" aria-hidden="true"></i>
+            </button>
+          </ng-template>
+          <button *ngIf="bookmarked_data[movie.id]; else list_content_empty" value="addList" (click)="addList(this.movie,$event)" class="btn btn-dark"
+            id="buttons-watchlater">
+            <i *ngIf="bookmarked_data[movie.id].list_status;else list_content" class="fa fa-bookmark" aria-hidden="true"></i>
+            <ng-template #list_content>
+              <i class="fa fa-bookmark-o" aria-hidden="true"></i>
+            </ng-template>
+          </button>
+          <ng-template #list_content_empty>
+            <button value="addList" (click)="addList(this.movie,$event)" class="btn btn-dark" id="buttons-watchlater">
+              <i class="fa fa-bookmark-o" aria-hidden="true"></i>
+            </button>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+    <br>
+    <br>
+    <div *ngIf="section.class == movie_detail_section" class="jumbotron jumbotron-fluid here" id={{section.class}}>
+      <div *ngIf="movie_details" class="container">
+        <h1 class="display-4" >{{movie_details.original_title}}</h1>
+        <p class="lead">
+          <i style="margin-left: 0px !important;" class="fa fa-calendar" aria-hidden="true"></i> {{movie_details.release_date}}
+          <i class="fa fa-imdb" aria-hidden="true"></i> {{movie_details.vote_average}}
+          <i class="fa fa-users" aria-hidden="true"></i>{{movie_details.vote_count}}
+          <i class="fa fa-rocket" aria-hidden="true"></i>{{movie_details.popularity}}
+          <i class="fa fa-language" aria-hidden="true"></i>{{rev_lang_obj[movie_details.original_language]}}
+          <i class="fa fa-hourglass" aria-hidden="true" id="here"></i> {{movie_details.runtime}} mintues
+        </p>
+        <i style="margin-left: 0px !important;">
+          <span style="color: #666; font-size: 12px;" *ngFor="let item of movie_details.genres; let i = index">
+            <span *ngIf="i < movie_details.genres.length-1;else fullstop2">&nbsp;{{gen[item.id]}},</span>
+            <ng-template #fullstop2>&nbsp;{{gen[item.id]}}.</ng-template>
+          </span>
+        </i>
+        <p>
+          <b>Cast: </b>
+          <span *ngFor="let cast of movie_details.credits.cast.slice(0,5);let i = index">
+            <span *ngIf="i < movie_details.credits.cast.slice(0,5).length-1; else fullstop">&nbsp;{{cast.name}},</span>
+            <ng-template #fullstop>&nbsp;{{cast.name}}.</ng-template>
+          </span>
+        </p>
+        <p *ngIf="movie_details.credits.crew">
+          <b>Main Crew:</b>
+          <span *ngFor="let main of movie_details.credits.crew.slice(0,3);let i = index">
+            <span *ngIf="i < movie_details.credits.crew.slice(0,3).length-1; else fullstop">&nbsp;{{main.name}} ({{main.job}}),</span>
+            <ng-template #fullstop>&nbsp;{{main.name}} ({{main.job}}).</ng-template>
+          </span>
+        </p>
+        <p>{{movie_details.overview}}</p>
+        <div style="text-align: center">
+          <a *ngIf="active_trailer!=movie_details.id; else show" id="{{movie_details.id}}" (click)="toggleTrailer($event)">Show Trailer</a>
+          <br>
+          <ng-template #show>
+            <a id="trailer-{{movie_details.id}}" (click)="toggleTrailer($event)">Hide Trailer</a>
+            <br>
+            <br>
+            <iframe width="420" height="345" [src]="trailer_key | safe" allowfullscreen>
+            </iframe>
+          </ng-template>
+          <a class="netflix" href="https://www.netflix.com/search?q={{movie_details.original_title}}" target="_blank">Netflix</a>
+          <a class="prime" href="https://www.primevideo.com/region/eu/search/ref=atv_nb_sr?phrase={{movie_details.original_title}}" target="_blank">
+            <i class="fa fa-play-circle" aria-hidden="true"></i> Prime Video</a>
+          <a href="http://1337x.to/search/{{movie_details.original_title}}" target="_blank">1337x</a>
+          <br>
+          <br>
+          <a style="color:white !important" class="btn btn-dark active" href="show/movie/{{movie_details.id}}" target="_blank">Complete Details</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<br>

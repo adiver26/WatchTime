@@ -1,0 +1,32 @@
+<div id="header">
+  <div>
+    <mat-toolbar id="cont" color="accent">
+      <div id="left">
+          <i class="fa fa-map-signs fa-lg" aria-hidden="true" (click)="toggNav()"></i>
+      </div>
+      <div id="center">
+          <a routerLink="/" routerLinkActive="active">
+            <img style="margin-bottom: 4px;" width=35% src="/assets/logo.png" alt="Haxèr">
+          </a>
+      </div>
+      <div id="right" [mat-menu-trigger-for]="menu">
+        <i class="fa fa-cogs fa-lg" aria-hidden="true" (click)="closeNav()"></i>
+      </div>
+    </mat-toolbar>
+    <mat-menu x-position="before" #menu="matMenu">
+      <button mat-menu-item routerLink="/about" routerLinkActive="active">About Us</button>
+      <button mat-menu-item routerLink="/settings" routerLinkActive="active">Settings</button>
+      <button mat-menu-item routerLink="/" *ngIf="signIn" (click)="logOut()">Sign out</button>
+    </mat-menu>
+
+  </div>
+  <div id="mySidenav" class="sidenav" (click)="toggNav()">
+    <a *ngIf="signIn=='true'" routerLink="/profile" routerLinkActive="active">{{Name}}</a>
+    <a *ngIf="signIn!='true'" routerLink="/login" routerLinkActive="active">Sign in</a>
+    <a *ngIf="signIn!='true'" routerLink="/signup" routerLinkActive="active">Register</a>
+    <a routerLink="/recom" class="show-off" routerLinkActive="active">Recommendations</a>
+    <a routerLink="/discover" class="show-off" routerLinkActive="active">Discover
+    </a>
+
+  </div>
+</div>

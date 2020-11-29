@@ -1,0 +1,264 @@
+<br>
+<div class="container" id="search" style="text-align:center">
+  <h3>Discover Movies
+  </h3>
+  <div class="btn-group">
+    <button class="btn btn-dark active dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+      aria-expanded="false">
+      <i class="fa fa-filter" aria-hidden="true"></i> Sort By
+    </button>
+    <div class="dropdown-menu" ria-labelledby="dropdownMenuButton">
+      <label *ngFor="let sort of sortby_keys; let myIndex = index" class="dropdown-item" (click)="sortFix(sort)">{{sortby[sort]}}
+      </label>
+    </div>
+  </div>
+  <div class="btn-group">
+    <button class="btn btn-dark active dropdown-toggle" type="button" id="dropdownMenuButton2" data-toggle="dropdown" aria-haspopup="true"
+      aria-expanded="false">
+      <i class="fa fa-film" aria-hidden="true"></i> Include Genres
+    </button>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+      <label *ngFor="let gen of genres_incl" class="dropdown-item">
+        <input style="margin-left:2px;" type="checkbox" class="form-check-input" value="{{gen}}" [(ngModel)]="gen.checked">&nbsp; {{gen.text}}</label>
+    </div>
+  </div>
+  <div class="btn-group">
+    <button class="btn btn-dark active dropdown-toggle" type="button" id="dropdownMenuButton3" aria-haspopup="true" data-toggle="dropdown"
+      aria-expanded="false">
+      <i class="fa fa-film" aria-hidden="true"></i> Exclude Genres
+    </button>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+      <label *ngFor="let gen of genres_excl" class="dropdown-item">
+        <input style="margin-left:2px;" type="checkbox" class="form-check-input" value="{{gen}}" [(ngModel)]="gen.checked">&nbsp; {{gen.text}}</label>
+    </div>
+
+  </div>
+  <div class="btn-group">
+    <button class="btn btn-dark active dropdown-toggle" type="button" id="dropdownMenuButton4" data-toggle="dropdown" aria-haspopup="true"
+      aria-expanded="false">
+      <i class="fa fa-calendar" aria-hidden="true"></i> Release Date
+    </button>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+      <a class="dropdown-item">
+        <label>From:</label>
+        <input class="form-control" id="before" #before type="date">
+        <br>
+        <label style="margin-left:16px;">To:</label>
+
+        <input class="form-control" id="after" #after type="date" value="{{before_date}}" style="margin-right:20px">
+      </a>
+    </div>
+  </div>
+  <div class="btn-group">
+    <button class="btn btn-dark active dropdown-toggle" type="button" id="dropdownMenuButton5" data-toggle="dropdown" aria-haspopup="true"
+      aria-expanded="false">
+      <i class="fa fa-language" aria-hidden="true"></i> Language
+    </button>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+      <a class="dropdown-item">
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span id="listbox" class="input-group-text">
+              <label style="margin-left:30px;"></label> &nbsp; Language</span>
+          </div>
+          <input list="languages" name="language" #lang id="lang">
+          <datalist id="languages">
+            <option *ngFor="let lang of lang_keys" value="{{lang}}">
+          </datalist>
+        </div>
+      </a>
+    </div>
+  </div>
+  <div class="btn-group">
+    <button class="btn btn-dark active dropdown-toggle" type="button" id="dropdownMenuButton6" data-toggle="dropdown" aria-haspopup="true"
+      aria-expanded="false">
+      <i class="fa fa-imdb" aria-hidden="true"></i> Rating
+    </button>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+      <a class="dropdown-item">
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon3">Greater than</span>
+          </div>
+          <input type="number" max="9" class="form-control" #rating aria-describedby="basic-addon3">
+        </div>
+      </a>
+    </div>
+  </div>
+  <div class="btn-group">
+    <button class="btn btn-dark active dropdown-toggle" type="button" id="dropdownMenuButton7" data-toggle="dropdown" aria-haspopup="true"
+      aria-expanded="false">
+      <i class="fa fa-imdb" aria-hidden="true"></i> Vote Count
+    </button>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+      <a class="dropdown-item">
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon3">Greater than</span>
+          </div>
+          <input type="number" max="10000000000" class="form-control" #vote_count aria-describedby="basic-addon3">
+        </div>
+      </a>
+    </div>
+  </div>
+  <br>
+  <div class="btn-group btn-group-toggle" data-toggle="buttons">
+    <label class="btn btn-light active" (click)="setCat(true, $event)">
+      <input type="radio" name="options" id="option1" autocomplete="off">
+      <i class="fa fa-film" aria-hidden="true"></i> Movies
+    </label>
+    <label class="btn btn-light" (click)="setCat(false, $event)">
+      <input type="radio" name="options" id="option2" autocomplete="off" checked>
+      <i class="fa fa-television" aria-hidden="true"></i> TV Shows
+    </label>
+  </div>
+  <br>
+  <!--<div class="form-check form-check-inline" style="margin-top: 10px">
+    <label class="form-check-label">
+      <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="false" checked disabled> Your Rated Movies
+      <sub>BETA</sub>
+    </label>
+  </div>-->
+  <br>
+  <div style="margin-top:10px" (click)="hax(vote_count.value, lang.value, rating.value, before.value, after.value)">
+    <button class="btn btn-light" type="button" id="haxthedb">
+      Discover
+      <i style="margin-left:3px;" class="fa fa-search-plus" aria-hidden="true"></i>
+    </button>
+  </div>
+
+</div>
+
+<div *ngIf="data">
+  <div *ngIf="data.results.length>1;else noresults">
+    <div style="text-align:center">
+      <br>
+      <h6 style="color: white;">Total Results : {{data.total_results}}</h6>  
+    </div>
+    <div class="card-group">
+      <mat-card class="example-card" *ngFor="let movie of data.results; let myIndex = index">
+        <mat-card-header>
+          <mat-card-title (click)="trackClick(movie)">
+            <b *ngIf="movie_selected; else tvshow">
+              <i class="fa fa-film fa-lg" aria-hidden="true"></i>
+              {{movie.title}} </b>
+            <ng-template #tvshow>
+              <b>
+                <i class="fa fa-television fa-lg" aria-hidden="true"></i> {{movie.name}}
+              </b>
+            </ng-template>
+          </mat-card-title>
+        </mat-card-header>
+        <img *ngIf="movie.backdrop_path;else other_content" (click)="trackClick(movie)" mat-card-image src="https://image.tmdb.org/t/p/w300/{{movie.backdrop_path}}">
+        <ng-template #other_content>
+          <img (click)="trackClick(movie)" mat-card-image src="/assets/nf.png">
+        </ng-template>
+        <mat-card-content (click)="trackClick(movie)">
+          <div class="d-flex justify-content-between">
+            <div>
+              <i class="fa fa-calendar" aria-hidden="true"></i> {{movie.release_date || movie.first_air_date || 'N/A'}}
+            </div>
+            <div>
+              <i class="fa fa-imdb fa-lg" aria-hidden="true"></i> {{movie.vote_average || 'N/A'}}
+            </div>
+          </div>
+          <i>
+            <span style="color: #666; font-size: 12px;" *ngFor="let item of movie.genre_ids;let i = index">
+              <span *ngIf="i < movie.genre_ids.length-1;else fullstop2">&nbsp;{{gen[item]}},</span>
+              <ng-template #fullstop2>&nbsp;{{gen[item] || 'N/A'}}.</ng-template>
+            </span>
+          </i>
+          <br>
+          <span *ngIf="movie.overview.length>140">{{movie.overview | truncate : 140 : true}} </span>
+          <span *ngIf="movie.overview.length<140">{{movie.overview || 'N/A'}} </span>
+          <br>
+
+          <div class="d-flex justify-content-between">
+            <div>
+              <i class="fa fa-eye fa-lg" aria-hidden="true"></i>
+              <span *ngIf="movie.adult; else Audience">Restricted</span>
+              <ng-template #Audience>
+                Unrestricted
+              </ng-template>
+            </div>
+            <div>
+              <i class="fa fa-language fa-lg" aria-hidden="true"></i> {{rev_lang_obj[movie.original_language] || 'N/A'}}
+            </div>
+          </div>
+          <i class="fa fa-rocket fa-lg" aria-hidden="true"></i> {{movie.popularity || 'N/A'}}
+          <br>
+        </mat-card-content>
+        <div class="links" style="text-align: center">
+          <a class="netflix" href="https://www.netflix.com/search?q={{movie.title || movie.name}}" target="_blank">Netflix</a>
+          <a class="prime" href="https://www.primevideo.com/region/eu/search/ref=atv_nb_sr?phrase={{movie.title || movie.name}}" target="_blank">
+            <i class="fa fa-play-circle" aria-hidden="true"></i> Prime Video</a>
+          <br>
+          <a href="http://1337x.to/search/{{movie.title}}" target="_blank">1337x</a>
+          <a *ngIf="movie.name" href="https://dwatchseries.to/search/{{movie.name}}" target="_blank">WatchSeries</a>
+        </div>
+        <mat-card-actions style="text-align: center">
+          <button value="like" *ngIf="like_status_data[movie.id]; else liked_content_empty" (click)="likeMovie(this.movie,$event)"
+            class="mat-button" mat-button>
+            <i *ngIf="like_status_data[movie.id].like_status;else liked_content" class="fa fa-thumbs-up fa-lg" aria-hidden="true"></i>
+            <ng-template #liked_content>
+              <i class="fa fa-thumbs-o-up fa-lg" aria-hidden="true"></i>
+            </ng-template>
+          </button>
+          <ng-template #liked_content_empty>
+            <button value="like" (click)="likeMovie(this.movie,$event)" class="mat-button" mat-button>
+              <i class="fa fa-thumbs-o-up fa-lg" aria-hidden="true"></i>
+            </button>
+          </ng-template>
+          <button value="dislike" *ngIf="like_status_data[movie.id]; else disliked_content_empty" (click)="dislikeMovie(this.movie,$event)"
+            class="mat-button" mat-button>
+            <i *ngIf="like_status_data[movie.id].like_status==false;else disliked_content" class="fa fa-thumbs-down fa-lg" aria-hidden="true"></i>
+            <ng-template #disliked_content>
+              <i class="fa fa-thumbs-o-down fa-lg" aria-hidden="true"></i>
+            </ng-template>
+          </button>
+          <ng-template #disliked_content_empty>
+            <button value="dislike" (click)="dislikeMovie(this.movie,$event)" class="mat-button" mat-button>
+              <i class="fa fa-thumbs-o-down fa-lg" aria-hidden="true"></i>
+            </button>
+          </ng-template>
+
+          <button *ngIf="bookmarked_data[movie.id]; else list_content_empty" value="addList" (click)="addList(this.movie,$event)" class="mat-button"
+            mat-button>
+            <i *ngIf="bookmarked_data[movie.id].list_status;else list_content" class="fa fa-bookmark fa-lg" aria-hidden="true"></i>
+            <ng-template #list_content>
+              <i class="fa fa-bookmark-o fa-lg" aria-hidden="true"></i>
+            </ng-template>
+          </button>
+          <ng-template #list_content_empty>
+            <button value="addList" (click)="addList(this.movie,$event)" class="mat-button" mat-button>
+              <i class="fa fa-bookmark-o fa-lg" aria-hidden="true"></i>
+            </button>
+          </ng-template>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div>
+
+  <ng-template #noresults>
+    <div class="container" style="text-align:center; position:relative;">
+      <p>No results found for '
+        <b>{{texts}}</b> ' </p>
+    </div>
+  </ng-template>
+  <br>
+  <div *ngIf="data" style="text-align: center">
+    <div *ngIf="data.results.length>1">
+      <a *ngIf="data.page>1" id="prev_button" (click)="prev()" class="previous round">
+        <i class="fa fa-arrow-circle-left fa-lg" aria-hidden="true"></i>
+      </a>
+      <a *ngIf="data.page<data.total_pages" id="next_button" (click)="next()" class="next round">
+        <i class="fa fa-arrow-circle-right fa-lg" aria-hidden="true"></i>
+      </a>
+    </div>
+  </div>
+  <br>
+  <div style="text-align: center; color: white">
+    {{data.page}} / {{data.total_pages}}
+  </div>
+  <br/>
+  <br/>
