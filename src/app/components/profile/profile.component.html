@@ -63,16 +63,18 @@
         <ng-template #showBook>
           <tbody>
             <tr *ngFor="let bookmark of bookmarked_data">
+              <ng-template [ngIf]="bookmark.list_status == true">
               <td>{{convertTimestamp(bookmark.last_updated)}}</td>
               <td>{{bookmark.title}}</td>
               <td>
-                  <ng-template [ngIf]="reaction.like_status == true">
+                  <ng-template [ngIf]="bookmark.list_status == true">
                       Bookmarked
                     </ng-template>
-                    <ng-template [ngIf]="bookmark.list_status == null || bookmark.list_status == undefined || bookmark.list_status">
+                    <ng-template [ngIf]="bookmark.list_status == null || bookmark.list_status == undefined">
                       Removed
                       </ng-template>
               </td>
+            </ng-template>
             </tr>
           </tbody>
         </ng-template>

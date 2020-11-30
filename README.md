@@ -1,9 +1,9 @@
 # Haxèr
 ### A hybrid and intuitive approach for discovering movies and getting recommendations! 
 
-![](haxer.png) 
+![](watchtime.png) 
 
-[Visit Website](https://haxer.herokuapp.com)
+[Visit Website](https://watchtime.herokuapp.com)
 
 # Abstract
 Movie Databases have been available since as early as the 1990s, but there has been a lack of an effective filtering mechanism of movies for the average user even today. If we consider the example of Netflix and IMDb, the filtering interface is very complex and it takes a significant amount of effort to filter a particular type of movie as needed by the user.

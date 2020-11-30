@@ -11,7 +11,7 @@ export class AboutUsComponent implements OnInit, OnDestroy {
   constructor() { }
 
   ngOnInit() {
-    document.getElementById("body").style.backgroundColor = '#e9ecef';
+    document.getElementById("body").style.backgroundColor = 'black';
   }
 
   ngOnDestroy() {

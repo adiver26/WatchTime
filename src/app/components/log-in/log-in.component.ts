@@ -25,7 +25,7 @@ export class LogInComponent implements OnInit {
     alert("Feature currently in beta");
   }
   sendReq(email, pass) {
-    this.loginstr = `/loginUser?email=${email}&pass=${pass}`;
+    this.loginstr = `/api/loginUser?email=${email}&pass=${pass}`;
     if (email==localStorage.getItem("Email") && pass==localStorage.getItem("Password"))
     {
       alert("Welcome " + localStorage.getItem("Name") + " !");

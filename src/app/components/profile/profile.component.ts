@@ -53,15 +53,14 @@ export class ProfileComponent implements OnInit, OnDestroy {
     {  
       if (localStorage.getItem("BOOKMARKED_DATA")) {
         this.bookmarked_data = localStorage.getItem("BOOKMARKED_DATA");
-        //this.bookmarked_data = Object.values(JSON.parse(this.bookmarked_data));
-        alert(JSON.parse(JSON.stringify(this.bookmarked_data)));
+        this.bookmarked_data = Object.values(JSON.parse(this.bookmarked_data));
       }       
-      /*let loginstr = '/getUserDetails?email=' + localStorage.getItem("Email");
+      let loginstr = '/api/getUserDetails?email=' + localStorage.getItem("Email");
       this.http.get(loginstr).subscribe(data => {
         console.log('SUCCESS');
         this.reactions_data = Object.values(data[0].reactions_data);
         this.bookmarked_data = Object.values(data[0].bookmark_data);
-      });*/
+      });
     }
     else {
       if (this.bookmarked_data == null || this.bookmarked_data == undefined) {

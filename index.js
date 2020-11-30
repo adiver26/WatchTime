@@ -1,6 +1,5 @@
 const express = require('express');
 const http = require('http');
-const sslRedirect = require('heroku-ssl-redirect');
 const compression = require('compression');
 const path = require('path');
 const MongoClient = require('mongodb').MongoClient;
@@ -10,10 +9,8 @@ const bodyParser = require('body-parser');
 const UIDGenerator = require('uid-generator');
 const uidgen = new UIDGenerator(256, UIDGenerator.BASE62);
 
-const mourl = 'mongodb://localhost:27017/';
+const mourl = 'mongodb://localhost:27017/db';
 console.log(mourl);
-console.log('abc');
-app.use(sslRedirect());
 app.use(compression(({ level: 9 })));
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
@@ -29,7 +26,7 @@ MongoClient.connect(mourl, function (err, db) {
 /**
  * Get User Details Endpoint
  */
-app.get('/loginUser', function (request, response) {
+app.get('/api/loginUser', function (request, response) {
   var querys = url.parse(request.url, true);
   var email = querys.query.email;
   var pass = querys.query.pass;
@@ -51,7 +48,7 @@ app.get('/loginUser', function (request, response) {
  * Check Existing User Endpoint
  */
 
-app.get('/getUserDetails', function (request, response) {
+app.get('/api/getUserDetails', function (request, response) {
   var querys = url.parse(request.url, true);
   var email = querys.query.email;
 
@@ -71,11 +68,12 @@ app.get('/getUserDetails', function (request, response) {
 
  //* Register User Endpoint
  
-app.get('/regUser', function (request, response) {
-  var querys = url.parse(request.url, true);
-  var name = querys.query.name;
-  var email = querys.query.email;
-  var pass = querys.query.password1;
+app.post('/api/signup', function (req, response) {
+  var querys = url.parse(req.url, true);
+  console.log(req.body);
+  var name = req.body.name;
+  var email = req.body.email;
+  var pass = req.body.password1;
   var tracking_data = {};
   var uid = uidgen.generateSync();
   console.log(uid);
@@ -110,9 +108,27 @@ app.get('/regUser', function (request, response) {
   });
 });
 
+app.post('/api/delete', function (req, response) {
+  var querys = url.parse(req.url, true);
+  console.log(req.body);
+  var email = req.body.email;
+  MongoClient.connect(mourl, function (err, db) {
+    var search = JSON.parse(`{"email": "${email}"}`);
+    console.log('search',search);
+   try {
+     db.collection("users").deleteOne({"email":`${email}`},function (err, res) {
+          if (err) throw err;
+          response.send(res);
+        } ); 
+    } catch(e) {
+      console.log(e);
+    }
+    db.close();  
+  });
+    
+  });
 
-
-app.post('/sendReactionData', function (req, res) {
+app.put('/api/sendReactionData', function (req, res) {
   var user_id = req.body.user_id;
   var tracking_data = {};
   tracking_data = JSON.parse(req.body.JSON_String);
@@ -155,7 +171,7 @@ app.post('/sendReactionData', function (req, res) {
 /**
  * Clicks Data Endpoint
  */
-app.post('/sendClicksData', function (req, res) {
+app.put('/api/sendClicksData', function (req, res) {
 
   var user_id = req.body.user_id;
   var additional_data = {};
@@ -199,7 +215,7 @@ app.post('/sendClicksData', function (req, res) {
  * Bookmark Data Endpoint
  */
 
-app.post('/sendBookmarkData', function (req, res) {
+app.put('/api/sendBookmarkData', function (req, res) {
 
   var user_id = req.body.user_id;
   var additional_data = {};
@@ -245,9 +261,9 @@ app.post('/sendBookmarkData', function (req, res) {
  * For using Angular generated templates with Node.js
  * Keep it in the end of the requests
  */
-app.use(express.static(path.join(__dirname, 'dist/'), { maxAge: '5d' }));
+app.use(express.static(path.join(__dirname, 'src/'), { maxAge: '5d' }));
 app.get('*', function (req, res) {
-  const index = path.join(__dirname, 'dist/', 'index.html');
+  const index = path.join(__dirname, 'src/', 'index.html');
   res.sendFile(index);
 });
 
@@ -255,4 +271,4 @@ const port = process.env.PORT || '3001';
 app.set('port', port);
 
 const server = http.createServer(app);
-server.listen(port, () => console.log(`Running`));
+server.listen(port, () => console.log(`Running on ${port}`));

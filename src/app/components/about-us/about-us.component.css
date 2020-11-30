@@ -1,12 +1,12 @@
 h2 {
-    color: black !important;
+    color: white !important;
 }
 
 a {
     text-decoration: none;
     display: inline-block;
     padding: 8px 16px;
-    color: grey;
+    color: white;
   }
   
   a:hover {
@@ -16,5 +16,6 @@ a {
 
   #name_dev:hover {
       background-color: inherit;
+      text-emphasis-color: white;
       
   }

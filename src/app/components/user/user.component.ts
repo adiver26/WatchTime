@@ -132,7 +132,7 @@ export class UserComponent implements OnInit {
   }
 
   getUserData() {
-    let loginstr = '/getUserDetails?email=' + localStorage.getItem("Email");
+    let loginstr = '/api/getUserDetails?email=' + localStorage.getItem("Email");
     this.http.get<UserResponse>(loginstr).subscribe(data => {
       this.user_details = data; // Assign local to global
       console.log(data[0].reactions_data);
@@ -271,7 +271,7 @@ export class UserComponent implements OnInit {
 
   send_impressions_to_db() {
     if (localStorage.getItem("Email")) {
-      this.http_sendTrackingData.post("/sendClicksData", { "user_id": localStorage.getItem("Email"), "JSON_String": localStorage.getItem("CLICKED_DATA") }).subscribe(data => {
+      this.http_sendTrackingData.put("/api/sendClicksData", { "user_id": localStorage.getItem("Email"), "JSON_String": localStorage.getItem("CLICKED_DATA") }).subscribe(data => {
         this.local_send_clicks_data = data;
         console.log("IMPRESSIONS TO DB SUCCESSFUL");
       },
@@ -283,7 +283,7 @@ export class UserComponent implements OnInit {
 
   send_bookmarks_to_db() {
     if (localStorage.getItem("Email")) {
-      this.http_sendAdditionalData.post("/sendBookmarkData", { "user_id": localStorage.getItem("Email"), "JSON_String": localStorage.getItem("BOOKMARKED_DATA") }).subscribe(data => {
+      this.http_sendAdditionalData.put("/api/sendBookmarkData", { "user_id": localStorage.getItem("Email"), "JSON_String": localStorage.getItem("BOOKMARKED_DATA") }).subscribe(data => {
         this.local_send_bookmark_data = data;
         console.log("BOOKMARKS TO DB SUCCESSFUL");
       },
@@ -295,7 +295,7 @@ export class UserComponent implements OnInit {
 
   send_reactions_to_db() {
     if (localStorage.getItem("Email")) {
-      this.http_sendTrackingData.post("/sendReactionData", {
+      this.http_sendTrackingData.put("/api/sendReactionData", {
         "user_id": localStorage.getItem("Email"),
         "JSON_String": localStorage.getItem("REACTION_DATA")
       }).subscribe(data => {

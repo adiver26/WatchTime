@@ -15,10 +15,6 @@ a {
     color:#efbb42 !important;
 }
 
-#haxlogo {
-    color: white !important;
-    display: none;
-}
 
 mat-toolbar{
     position: fixed;
@@ -56,12 +52,7 @@ mat-toolbar{
     float:right;
 }
 
-#haxinfo {
-    text-align: center;
-    background-color: whitesmoke;
-    position: absolute;
-    bottom: 0px;
-}
+
 
 p{
     color: black;

@@ -36,8 +36,8 @@ import { ProfileComponent } from './components/profile/profile.component';
 
 const appRoutes: Routes = [
   { path: '', component: UserComponent },
-  { path: 'signup', component: SignUpComponent },
-  { path: 'login', component: LogInComponent },
+  { path: 'api/signup', component: SignUpComponent },
+  { path: 'api/login', component: LogInComponent },
   { path: 'recom', component: RecommenderComponent },
   { path: 'show/movie/:id', component: MovieDetailComponent },
   { path: 'show/tv/:id', component: MovieDetailComponent },

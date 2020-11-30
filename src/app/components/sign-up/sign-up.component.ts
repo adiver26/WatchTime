@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'app-sign-up',
@@ -40,20 +40,30 @@ export class SignUpComponent implements OnInit {
       alert("Passwords don't match");
       return;
     }
-    this.register = `/regUser?name=${name}&email=${email}&password1=${pass1}`;
+
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Basic YW5ndWxhcjphbmd1bGFy'
+    });
+
+    const options = {
+      headers
+    };
+
+    this.register = `/signup?name=${name}&email=${email}&password1=${pass1}`;
     console.log(this.register);
     localStorage.setItem("Email", `${email}`);
     localStorage.setItem("Name", `${name}`);
     localStorage.setItem("Password", `${pass2}`);
     localStorage.setItem("signin",`true`);
     //window.location.href = "/";
-    this.http.get<UserResponse>(this.register).subscribe(data => {
+    this.http.post<UserResponse>('/api/signup',{name:`${name}`,email:`${email}`,password1:`${pass2}`}, options).subscribe(data => {
       console.log(data);
       console.log(this.register);
-
       if (data.ok == 1) {
-        alert("Successfully registered, please login :-)");
-        this.send_to_login_page();
+        alert("Successfully registered");
+        //this.send_to_login_page();
+        window.location.href = "/";
       }
       else {
         alert("User already exists, please login or reset your password!");
@@ -63,7 +73,7 @@ export class SignUpComponent implements OnInit {
   }
 
   send_to_login_page() {
-    window.location.href = "/login";
+    window.location.href = "/api/login";
   }
 
 }

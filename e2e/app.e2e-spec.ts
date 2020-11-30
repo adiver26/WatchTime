@@ -1,6 +1,6 @@
 import { AppPage } from './app.po';
 
-describe('haxer-ng App', () => {
+describe('watchtime-ng App', () => {
   let page: AppPage;
 
   beforeEach(() => {
