@@ -132,6 +132,7 @@ export class RecommenderComponent extends UserComponent implements OnInit, OnDes
     else {
       lang = 'en-US';
     }
+    //clustering using api
     let similar_api;
     let popular_api;
     let recom_api;
