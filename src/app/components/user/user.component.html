@@ -52,7 +52,7 @@
             </ng-template>
           </mat-card-title>
         </mat-card-header>
-        <img style="border-radius: 10px" class="movie.backdrop_path;else other_content" (click)="trackClick(movie)" mat-card-image src="https://image.tmdb.org/t/p/w300/{{movie.backdrop_path}}">
+        <img *ngIf="movie.backdrop_path;else other_content" style="border-radius: 10px" class="movie.backdrop_path;else other_content" (click)="trackClick(movie)" mat-card-image src="https://image.tmdb.org/t/p/w300/{{movie.backdrop_path}}">
         <ng-template #other_content>
           <img (click)="trackClick(movie)" mat-card-image src="/assets/nf.png">
         </ng-template>
