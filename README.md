@@ -26,7 +26,7 @@ Dependencies listed in *package.json*
 npm install // After installing node and angular
 ```
 
-## Start MongoDB Server
+## Start the MongoDB Server
 ```
 mongod.exe
 ```
