@@ -4,9 +4,9 @@
 ![](logo.png) 
 
 # Abstract
-Movie Databases have been available since as early as the 1990s, but there has been a lack of an effective filtering mechanism of movies for the average user even today. If we consider the example of Netflix and IMDb, the filtering interface is very complex and it takes a significant amount of effort to filter a particular type of movie as needed by the user.
-Also, there has been an increasing demand of Recommendation Systems for movies these days in today’s market as people tend to spend a lot of money when they go to the movies or rent a movie, so they need to make an informed decision about it. Over the past decade, a large number of recommendation systems for a variety of domains have been developed and are in use. These recommendation systems use a variety of methods such as content based approach, collaborative filtering approach, popularity based recommendation engines,  hybrid approach, etc but the existing solutions are found to be particularly ineffective for the end users.
-Our system is a full-stack web application which uses a live movie source, TMDb, which maintains  all real-world movies in their database, with their genres, date released, IMdb scores, etc . The users will have the ability to register themselves in our system so that we can track their browsing activity in our website. The website uses an effective movie filter in the discover section which will solve the problem of filtering movies and a hybrid approach to recommendations would be based on user history, movie similarity and  which will hence provide an effective solution to the aforementioned problems.
+A movie recommendation is important due to today's pop culture, as it provides enhanced entertainment. Such a system can suggest a set of movies to users based on their interest, or the popularities of the movies. Some popular systems would include Netflix and Hulu.
+There has been an increasing demand of Recommendation Systems for movies these days, as people don't want any hassle in picking movies of that would interest them. In today's context, many forms of  recommendation systems are implemented such as content based, collaborative filtering, popularity based recommendation engines,  hybrid approach, etc.
+We have developed a  full-stack web application which uses a live movie source, TMDb, which maintains  all real-world movies in their database, with their genres, date released, IMdb scores, etc . The users will have the ability to register themselves in our system so that we can track their browsing activity in our website. The website uses an effective movie filter in the discover section which will solve the problem of filtering movies and we use The idea behind Content-based (cognitive filtering) recommendation system, which is to recommend an item based on a comparison between the content of the movies such as their genres, IMDb score, etc and a user profile, to generate a list of movies tailored specifically for a particular user.
 
 # Technologies Used
 * TMDb APIs
@@ -44,6 +44,3 @@ ng serve
 * Aditya Verma
 * Vishruth L
 * Vishnu Charan
-
-
-
