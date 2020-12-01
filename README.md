@@ -1,5 +1,5 @@
 # WatchTime
-### A hybrid and intuitive approach for discovering movies and getting recommendations! 
+### An easy way to find discovering movies and getting recommendations.
 
 ![](logo.png) 
 
